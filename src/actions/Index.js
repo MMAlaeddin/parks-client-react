@@ -16,7 +16,7 @@ export const getParksFailure = (error) => ({
 
 export const makeApiCall = () => {
   return dispatch => {
-    dispatch(requestHeadlines);
+    dispatch(requestParks);
     return fetch(`https://localhost:5000/api/parks`)
       .then(response => response.json())
       .then(

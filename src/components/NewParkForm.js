@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReusableForm from "/.ReusableForm";
+import ReusableForm from "./ReusableForm";
 
 function NewParkForm(props) {
 

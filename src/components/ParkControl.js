@@ -1,22 +1,23 @@
 import React from 'react'
 import ParkList from './ParkList';
-import SearchForm from './SearchForm';
+import SearchParkForm from './SearchParkForm';
 import { connect } from 'react-redux';
 import { makeApiCall } from './../actions';
 import NewParkForm from './NewParkForm';
 import EditParkForm from './EditParkForm';
+import ParkDetail from './ParkDetail';
 
 class ParkControl extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      searched: false,
-      searchState: null,
-      searchName: null,
-      selectedPark: null,
-      editing:false
-    };
+    // this.state = {
+    //   searched: false,
+    //   searchState: null,
+    //   searchName: null,
+    //   selectedPark: null,
+    //   editing:false
+    // };
   }
 
   handleClick = () => {
@@ -150,7 +151,7 @@ class ParkControl extends React.Component {
         </React.Fragment>
       )
     }
-    
+
     let currentlyVisibleState = null;
     let buttonText = null;
     if(this.state.editing) {
@@ -159,7 +160,7 @@ class ParkControl extends React.Component {
       buttonText = "Return to Park List";
     }
  else if(this.state.selectedPark != null) {
-      currentlyVisibleState = <ParkParkDetail 
+      currentlyVisibleState = <ParkDetail 
       park = {this.state.selectedPark}
       onClickingDelete = {this.handleDeletingPark}
       onClickingEdit = {this.handleEditClick}/>
@@ -170,20 +171,21 @@ class ParkControl extends React.Component {
     } else {
       currentlyVisibleState = <ParkList parkList={this.state.masterParkList} onParkSelection={this.handleChangingSelectPark} />
       buttonText = "Add Park";
+    
     }
   }
 }
 
-  ParkControl.propTypes = {
-    masterParkList: PropTypes.object
-  };
+  // ParkControl.propTypes = {
+  //   masterParkList: PropTypes.object
+  // };
   
   const mapStateToProps = state => {
     return {
-      parks: state.parks,
+      park: state.park,
       isLoading: state.isLoading,
       error: state.error
     }
   }
 
-export default connect(mapstateToProps)(ParkControl);
+export default connect(mapStateToProps)(ParkControl);

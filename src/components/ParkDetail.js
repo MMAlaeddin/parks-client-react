@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function ParkDetails(props) {
+function ParkDetail(props) {
   const { park, onClickingDelete } = props; 
 
   return (

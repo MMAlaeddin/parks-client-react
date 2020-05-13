@@ -1,35 +1,28 @@
-import React from 'react';
+import React from "react";
+import ReusableForm from "./ReusableForm";
+import PropTypes from "prop-types";
 
-function EditParkForm(props) {
+function EditParkForm (props) {
+  const { park } = props;
+
+  function handleEditParkFormSubmission(event) {
+    event.preventDefault();
+    props.onEditPark({
+      name: event.target.name.value, 
+      city: event.target.city.value,
+      state: event.target.state.value,
+      climbingRouts: event.target.climbingRouts.value,
+      campgrounds: event.target.campgrounds.value,
+      generalStores: event.target.generalStores.value,
+      id: park.id
+    });
+  }
+
   return (
     <React.Fragment>
-      <h3>Create Park</h3>
-      <form onSubmit={props.formSubmissionHandler}>
-        <input
-          type = 'text'
-          name = 'name'
-          placeholder = 'National Park Name' /><br/>
-        <input
-          type = 'text'
-          city = 'city'
-          placeholder = 'City' /><br/>
-        <input
-          type = 'text'
-          state = 'state'
-          placeholder = 'State' /><br/>
-        <input
-          type = 'text'
-          climbingRoutes = 'climbingRoutes'
-          placeholder = 'Climbing Routes' /><br/>
-        <input
-          type = 'text'
-          campgrounds = 'campgrounds'
-          placeholder = 'Campgrounds' /><br/>
-        <input
-          type = 'text'
-          generalStore = 'generalStores'
-          placeholder = 'General Stores' /><br/>
-      </form>
+      <ReusableForm 
+        formSubmissionHandler={handleEditParkFormSubmission}
+        buttonText="Update Park" />
     </React.Fragment>
   );
 }

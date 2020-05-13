@@ -1,3 +1,28 @@
+# National Parks Search for Rock Climbers
+
+#### By: Mariam, James, Hristo, Dom & Jose
+
+## Description
+
+A National Parks client app that uses [this National Parks API](https://github.com/MMAlaeddin/NationalParksAPI) for rock climbers to search for parks and find the amount of climbing routes, campgrounds and general stores.  
+
+
+## Known Bugs
+
+No known bugs
+
+## Support and contact details
+
+[Mariam](https://github.com/MMAlaeddin)
+[James](https://github.com/jamestlalocPDX)
+[Hristo](https://github.com/dzhambov)
+[Dom](https://github.com/21-Coding)
+[Jose](https://github.com/joseamesquita)
+
+## Technologies Used
+
+Redux, React, UUID, Git, HTML, CSS, JavaScript, jQuery, NPM, webpack, Bootstrap, Webpack
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

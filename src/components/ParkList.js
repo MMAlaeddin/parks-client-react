@@ -12,7 +12,7 @@ function ParkList(props) {
         name={park.name}
         city={park.city}
         state={park.state}
-        climbingRouts={park.climbingRouts}
+        climbingRoutes={park.climbingRouts}
         campgrounds={park.campgrounds}
         generalStores={park.generalStores}
         id={park.id}

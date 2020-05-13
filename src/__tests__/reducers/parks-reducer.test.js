@@ -1,4 +1,5 @@
 import parksReducer from '../../reducers/parks-reducer';
+import * as c from './../..actions/ActionTypes';
 
 describe('parksReducer', () => {
 

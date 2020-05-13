@@ -12,7 +12,7 @@ class ParkControl extends React.Component {
     super(props);
     this.state = {
       selectedPark: null,
-      editin:false
+      editing:false
     };
   }
 
@@ -99,16 +99,23 @@ class ParkControl extends React.Component {
     this.setState({editing: true})
   }
 
-  handleEditingParkList = (parkToEdit) => {
-    const { dispatch } = this.props;
-    const action = a.addPark(parkToEdit);
-    dispatch(action);
-    this.setState({
-      editing: false,
-      selectedPark: null
+  handleEditingParkList = async (park) => {
+    const id = park.parkId;
+    await fetch(`https://localhost:5004/api/park/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify(park)
     });
+    this.setState({
+      selectedPark: null,
+      editing: false
+    })
+    const { dispatch } = this.props;
+    dispatch(makeApiCall());
   }
-
+  
   render(){
     const { error, isLoading, parks } = this.props;
     

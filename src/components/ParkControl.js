@@ -1,13 +1,10 @@
-import React from 'react';
-import NewParkForm from './NewParkForm';
+import React from 'react'
 import ParkList from './ParkList';
-import ParkDetail from './ParkDetail';
-import EditParkForm from './EditParkForm';
 import SearchForm from './SearchForm';
 import { connect } from 'react-redux';
 import { makeApiCall } from './../actions';
-import PropTypes from 'prop-types';
-import * as a from './../actions';
+import NewParkForm from './NewParkForm';
+import EditParkForm from './EditParkForm';
 
 class ParkControl extends React.Component {
 
@@ -43,12 +40,25 @@ class ParkControl extends React.Component {
     let stateSearch = (state !== "") ? state : "";
   }
   
-  handleAddingNewPakToList = (newPark) => {
+  // handleAddingNewParkToList = (newPark) => {
+  //   const { dispatch } = this.props;
+  //   const action = a.addPArk(newPark)
+  //   dispatch(action);
+  //   const action2 = a.toggleForm();
+  //   dispatch(action2);
+  // }
+
+  handleAddingParkToDb = async (park) => {
+    await fetch(`https://localhost:5004/api/parks`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(park)
+    });
+    this.setState({newParkFormVisible: false});
     const { dispatch } = this.props;
-    const action = a.addPArk(newPark)
-    dispatch(action);
-    const action2 = a.toggleForm();
-    dispatch(action2);
+    dispatch(makeApiCall());
   }
 
   refreshList = () => {
@@ -65,11 +75,24 @@ class ParkControl extends React.Component {
       selectedPark: selectedPark});
   }
 
-  handleDeletingPark = (id) => {
-    const { dispatch } = this.props;
-    const action = a.deletePark(id);
-    dispatch(action);
-    this.setState({selectedPark: null});
+  // handleDeletingPark = (id) => {
+  //   const { dispatch } = this.props;
+  //   const action = a.deletePark(id);
+  //   dispatch(action);
+  //   this.setState({selectedPark: null});
+  // }
+
+  handleDeletingPark = async (id) => {
+    await fetch(`https://localhost:5004/api/parks/${id}`, {
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then((jsonifiedResponse) => {
+      setParkList(jsonifiedResponse);
+    })
+    .catch((error) => {
+      setError(error);
+    });
   }
 
   handleEditClick = () => {

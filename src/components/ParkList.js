@@ -11,18 +11,21 @@ function ParkList() {
     get();
   }, [])
 
-  async function addPark(park) {
-    await fetch(``, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(park)
-    })
-  }
+  // async function addPark(park) {
+  //   await fetch(`https://localhost:5004/`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(park)
+  //   });
+  //   this.setState({newParkFormVisible: false});
+  //   const { dispatch } = this.props;
+  //   dispatch(makeApiCall());
+  // }
 
   async function get() {
-    await fetch(``)
+    await fetch(`https://localhost:5004/`)
     .then(response => response.json())
     .then((jsonifiedResponse) => {
       setParkList(jsonifiedResponse);

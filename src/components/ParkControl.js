@@ -11,13 +11,16 @@ class ParkControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searched: false,
+      searchState: null,
+      searchName: null,
       selectedPark: null,
       editing:false
     };
   }
 
   handleClick = () => {
-    if(this.this.state.selectedPark !== null) {
+    if(this.state.selectedPark !== null) {
       this.setState({
         selectedPark: null,
         editing: false
@@ -38,6 +41,15 @@ class ParkControl extends React.Component {
     const { name, state } = searchPark;
     let nameSearch = (name !== "") ? name : "";
     let stateSearch = (state !== "") ? state : "";
+    this.setState({searched: true, searchState: stateQuery, searchName: nameQuery});
+  }
+
+  refreshList = () => {
+    this.setState({searched: false, searchName: nameQuery, searchState: stateQuery});
+  }
+  
+  showParkListButton = () => {
+    return (this.state.searched) ? <button onClick = { this.refreshList }>Show Me the Parks!</button> : null
   }
   
   // handleAddingNewParkToList = (newPark) => {
@@ -61,13 +73,13 @@ class ParkControl extends React.Component {
     dispatch(makeApiCall());
   }
 
-  refreshList = () => {
-    this.setState({searched: false, searchName: nameQuery, searchState: stateQuery});
-  }
+  // refreshList = () => {
+  //   this.setState({searched: false, searchName: nameQuery, searchState: stateQuery});
+  // }
   
-  showParkListButton = () => {
-    return (this.state.searched) ? <button onClick = { this.refreshList }>Show Me the Parks!</button> : null
-  }
+  // showParkListButton = () => {
+  //   return (this.state.searched) ? <button onClick = { this.refreshList }>Show Me the Parks!</button> : null
+  // }
 
   handleChangingSelectPark = (id) => {
     const selectedPark = this.props.masterParkList[id];
@@ -115,7 +127,7 @@ class ParkControl extends React.Component {
     const { dispatch } = this.props;
     dispatch(makeApiCall());
   }
-  
+
   render(){
     const { error, isLoading, parks } = this.props;
     

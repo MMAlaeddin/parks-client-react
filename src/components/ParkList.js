@@ -35,28 +35,34 @@ function ParkList() {
     });
   }
 
-  async function deletePark(id) {
-    await fetch(``, {
-      method: 'DELETE'
-    })
-    .then(response => response.json())
-    .then((jsonifiedResponse) => {
-      setParkList(jsonifiedResponse);
-    })
-    .catch((error) => {
-      setError(error);
-    });
-  }
+  // async function deletePark(id) {
+  //   await fetch(`https://localhost:5004/api/parks/${id}`, {
+  //     method: 'DELETE'
+  //   })
+  //   .then(response => response.json())
+  //   .then((jsonifiedResponse) => {
+  //     setParkList(jsonifiedResponse);
+  //   })
+  //   .catch((error) => {
+  //     setError(error);
+  //   });
+  // }
 
-  async function editPark(id, propsToUpdate) {
-    await fetch(`/{id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify(propsToUpdate)
-    })
-  }
+  // handleEditingPark = async (park) => {
+  //   const id = park.parkId;
+  //   await fetch(`https://localhost:5004/api/park/${id}`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body:JSON.stringify(park)
+  //   });
+  // }
+  // this.setState({
+  //   selectedPark: null
+  // })
+  // const { dispatch } = this.props;
+  // dispatch(makeApiCall());
 
   return (
     <React.Fragment>

@@ -14,17 +14,6 @@ export const getParksFailure = (error) => ({
   error
 });
 
-export const makeApiCall = () => {
-  return dispatch => {
-    dispatch(requestParks);
-    return fetch(`https://localhost:5000/api/parks`)
-      .then(response => response.json())
-      .then(
-        (jsonifiedResponse) => {
-          dispatch(getParksSuccess(jsonifiedResponse));
-        })
-      .catch((error) => {
-        dispatch(getParksFailure(error));
-      });
-  }
-}
+export const toggleForm = () => ({
+  type: c.TOGGLE_FORM
+});

@@ -2,11 +2,12 @@ import React from 'react'
 import ParkList from './ParkList';
 import SearchParkForm from './SearchParkForm';
 import { connect } from 'react-redux';
-import { makeApiCall } from './../actions';
+import { makeApiCall } from '../actions';
 import NewParkForm from './NewParkForm';
 import EditParkForm from './EditParkForm';
 import ParkDetail from './ParkDetail';
-
+import * as a from '../actions';
+import PropTypes from "prop-types";
 
 class ParkControl extends React.Component {
 
@@ -27,10 +28,10 @@ class ParkControl extends React.Component {
       this.setState({
         selectedPark: null,
         editing: false});
-      } else if (this.state.formVisibleOnPage) {
-        this.setState({formVisibleOnPage: false});
       } else {
-        this.setState({formVisibleOnPage: true});
+        const { dispatch } = this.props;
+        const action = a.toggleForm();
+        dispatch(action);
       }
     }
 

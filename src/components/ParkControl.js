@@ -9,8 +9,6 @@ import { makeApiCall } from './../actions';
 import PropTypes from 'prop-types';
 import * as a from './../actions';
 
-
-
 class ParkControl extends React.Component {
 
   constructor(props) {
@@ -45,8 +43,6 @@ class ParkControl extends React.Component {
     let stateSearch = (state !== "") ? state : "";
   }
   
-
-
   handleAddingNewPakToList = (newPark) => {
     const { dispatch } = this.props;
     const action = a.addPArk(newPark)

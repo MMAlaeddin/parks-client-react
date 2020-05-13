@@ -17,7 +17,7 @@ function NewParkForm(props) {
     <React.Fragment>
       <ReusableForm 
         formSubmissionHandler={handleNewParkFormSubmission}
-        buttonText="Help!" />
+        buttonText="Add Park!" />
     </React.Fragment>
   );
 }

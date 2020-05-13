@@ -7,31 +7,32 @@ import NewParkForm from './NewParkForm';
 import EditParkForm from './EditParkForm';
 import ParkDetail from './ParkDetail';
 
+
 class ParkControl extends React.Component {
 
   constructor(props) {
     super(props);
-    // this.state = {
-    //   searched: false,
-    //   searchState: null,
-    //   searchName: null,
-    //   selectedPark: null,
-    //   editing:false
-    // };
+    this.state = {
+      searched: false,
+      searchState: null,
+      searchName: null,
+      selectedPark: null,
+      editing:false,
+      formVisibleOnPage: false
+    };
   }
 
   handleClick = () => {
     if(this.state.selectedPark !== null) {
       this.setState({
         selectedPark: null,
-        editing: false
-      });
-    } else {
-      const { dispatch } = this.props;
-      const action = a.toggleForm();
-      dispatch(action);
+        editing: false});
+      } else if (this.state.formVisibleOnPage) {
+        this.setState({formVisibleOnPage: false});
+      } else {
+        this.setState({formVisibleOnPage: true});
+      }
     }
-  }
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -42,11 +43,11 @@ class ParkControl extends React.Component {
     const { name, state } = searchPark;
     let nameSearch = (name !== "") ? name : "";
     let stateSearch = (state !== "") ? state : "";
-    this.setState({searched: true, searchState: stateQuery, searchName: nameQuery});
+    this.setState({searched: true, searchState: stateSearch, searchName: nameSearch});
   }
 
   refreshList = () => {
-    this.setState({searched: false, searchName: nameQuery, searchState: stateQuery});
+    this.setState({searched: false, searchName: null, searchState: null});
   }
   
   showParkListButton = () => {
@@ -55,7 +56,7 @@ class ParkControl extends React.Component {
   
   // handleAddingNewParkToList = (newPark) => {
   //   const { dispatch } = this.props;
-  //   const action = a.addPArk(newPark)
+  //   const action = a.addPark(newPark)
   //   dispatch(action);
   //   const action2 = a.toggleForm();
   //   dispatch(action2);
@@ -98,14 +99,17 @@ class ParkControl extends React.Component {
   handleDeletingPark = async (id) => {
     await fetch(`https://localhost:5004/api/parks/${id}`, {
       method: 'DELETE'
-    })
-    .then(response => response.json())
-    .then((jsonifiedResponse) => {
-      setParkList(jsonifiedResponse);
-    })
-    .catch((error) => {
-      setError(error);
     });
+    const { dispatch } = this.props;
+    dispatch(makeApiCall());
+  //   .then(response => response.json())
+  //   .then((jsonifiedResponse) => {
+  //     setParkList(jsonifiedResponse);
+  //   })
+  //   .catch((error) => {
+  //     setError(error);
+  //   });
+  // }
   }
 
   handleEditClick = () => {

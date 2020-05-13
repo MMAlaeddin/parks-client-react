@@ -3,7 +3,7 @@ import Park from './Park';
 import PropTypes from 'prop-types';
 import NewParkForm from './NewParkForm';
 
-function ParkList() {
+function ParkList(props) {
   const [parkList, setParkList] = useState([]);
   const [error, setError] = useState(null);
 
@@ -66,9 +66,11 @@ function ParkList() {
 
   return (
     <React.Fragment>
-      <h1>Compground Park</h1>
-      <NewParkForm onAddPark={addPark}/>
-      {parkList !== null ? parkList.map(park => <Park key={park.parkId} park={park} onDeletePaark={deletePark} onEditPark={editPark}/>) : <h1>{error}</h1>}
+      <h1>National Parks</h1>
+      <button onClick = {() => props.handleClick()}>Add A Park</button>
+
+      {/* <NewParkForm onAddPark={addNewPark}/>
+      {parkList !== null ? parkList.map(park => <Park key={park.parkId} park={park} onDeletePark={deletePark} onEditPark={editPark}/>) : <h1>{error}</h1>} */}
       {/* <hr/>
       {props.parkList.map((park) => 
       <Park
@@ -86,9 +88,9 @@ function ParkList() {
   );
 }
 
-// ParkList.propTypes = {
-//   parkList: PropTypes.array,
-//   onParkSelection: PropTypes.func
-// };
+ParkList.propTypes = {
+  parkList: PropTypes.array,
+  onParkSelection: PropTypes.func
+};
 
 export default ParkList;

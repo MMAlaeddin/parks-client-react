@@ -2,6 +2,8 @@ import parksReducer from '../../reducers/parks-reducer';
 
 describe('parksReducer', () => {
 
+  let action;
+
   const defaultState = {
     isLoading: false,
     parks: [],
@@ -16,5 +18,17 @@ describe('parksReducer', () => {
         error: null
       }
     );
+  });
+
+  test('requesting parks should successfully change isLoading from false to true', () => {
+    ation = {
+      type: c.REQUEST_PARKS
+    };
+
+    expect(parksReducer(defaultState, action)).toEqual({
+      isLoading: true,
+      parks: [],
+      error: null
+    });
   });
 });

@@ -7,6 +7,7 @@ import SearchForm from './SearchForm';
 import { connect } from 'react-redux';
 import { makeApiCall } from './../actions';
 import PropTypes from 'prop-types';
+import * as a from './../actions';
 
 
 
@@ -14,6 +15,23 @@ class ParkControl extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      selectedPark: null,
+      editin:false
+    };
+  }
+
+  handleClick = () => {
+    if(this.this.state.selectedPark !== null) {
+      this.setState({
+        selectedPark: null,
+        editing: false
+      });
+    } else {
+      const { dispatch } = this.props;
+      const action = a.toggleForm();
+      dispatch(action);
+    }
   }
 
   componentDidMount() {
@@ -28,50 +46,45 @@ class ParkControl extends React.Component {
   }
   
 
-  handleClick = () => {
-    if(this.this.state.selectedPark !== null) {
-      this.setState({
-        formVisibleOnPage: false,
-        selectedPark: null
-      });
-    } else {
-      this.setState(prevState => ({
-        formVisibleOnPage: !prevState.formVisibleOnPage
-      }));
-    }
-  }
 
   handleAddingNewPakToList = (newPark) => {
-    const newMasterParkList = this.state.masterParkList.concat(newPark);
-    this.setState({
-      masterParkList: newMasterParkList,
-      formVisibleOnPage: false
-    });
+    const { dispatch } = this.props;
+    const action = a.addPArk(newPark)
+    dispatch(action);
+    const action2 = a.toggleForm();
+    dispatch(action2);
+  }
+
+  refreshList = () => {
+    this.setState({searched: false, searchName: nameQuery, searchState: stateQuery});
+  }
+  
+  showParkListButton = () => {
+    return (this.state.searched) ? <button onClick = { this.refreshList }>Show Me the Parks!</button> : null
   }
 
   handleChangingSelectPark = (id) => {
-    const selectedPark = this.state.masterParkList.filter(park => park.id === id)[0];
+    const selectedPark = this.props.masterParkList[id];
     this.setState({
-      selectedPark: selectedPark
-    });
+      selectedPark: selectedPark});
   }
 
   handleDeletingPark = (id) => {
-    const newMasterParkLits = thistory.state.masterParkList.filter(park => park.id !== id);
-    this.setState({
-      masterParkList: newMamasterParkList,
-    selectedPark: null
-    }); 
+    const { dispatch } = this.props;
+    const action = a.deletePark(id);
+    dispatch(action);
+    this.setState({selectedPark: null});
   }
 
   handleEditClick = () => {
-    this.setState({editing:true})
+    this.setState({editing: true})
   }
 
   handleEditingParkList = (parkToEdit) => {
-    const editedMasterParkList = this.state.masterParkList.filter(park => park.id !== this.state.selectedPark.id).concat(parkToEdit); 
+    const { dispatch } = this.props;
+    const action = a.addPark(parkToEdit);
+    dispatch(action);
     this.setState({
-      masterParkList: editedMasterParkList,
       editing: false,
       selectedPark: null
     });
@@ -90,9 +103,13 @@ class ParkControl extends React.Component {
           <h1>Parks!</h1>
           <ul>
             {parks.map((park, index) =>
-            <h3>{park.name}</h3>
-            <p
-        >{park.city})}
+              <li key={index}>
+                <h3>{park.name}</h3>
+                <p>{park.city}, {park.state}</p>
+              </li>
+            )}
+          </ul>
+        </React.Fragment>
       )
     }
     
@@ -111,24 +128,24 @@ class ParkControl extends React.Component {
       buttonText = "Return to Park List";
     } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewParkForm onNewParkCreation={this.state.handleAddigNewParkToList} />
-      buttonText = "Return to Park List";}
-     else {
-      currentlyVisibleState = <ParkList
-    }}
-  }
-
-  ParkControl = connect(mapstaeToProps)(ParkControl);
-  
-  ParkControl.propTypes = {
-      masterParkList: PropTypes.object
-  };
-
-  const mapstaeToProps = state => {
-      return {
-          masterParkList: state.masterParkList,
-          formVisibleOnPage: state.formVisibleOnPage
-      }
+      buttonText = "Return to Park List";
+    } else {
+      currentlyVisibleState = <ParkList parkList={this.state.masterParkList} onParkSelection={this.handleChangingSelectPark} />
+      buttonText = "Add Park";
+    }
   }
 }
 
-export default ParkControl;
+  ParkControl.propTypes = {
+    masterParkList: PropTypes.object
+  };
+  
+  const mapStateToProps = state => {
+    return {
+      parks: state.parks,
+      isLoading: state.isLoading,
+      error: state.error
+    }
+  }
+
+export default connect(mapstateToProps)(ParkControl);
